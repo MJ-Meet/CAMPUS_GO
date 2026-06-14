@@ -1412,19 +1412,211 @@ textarea:focus { outline: none; border-color: var(--brand-purple); }
 }
 
 @media (max-width: 768px) {
-  .sidebar { position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%); transition: transform 0.3s; z-index: 100; }
+  /* ---- SIDEBAR ---- */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 280px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+  }
   .sidebar.open { transform: translateX(0); }
-  .sidebar-overlay { display: block; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
   .sidebar-overlay.show { opacity: 1; pointer-events: auto; }
-  .mobile-only { display: flex; }
-  .search-container { width: auto; flex: 1; margin: 0 16px; }
+
+  /* ---- TOPBAR ---- */
+  .mobile-only { display: flex !important; }
+  .topbar {
+    padding: 0 12px;
+    height: 60px;
+    gap: 8px;
+  }
+  .search-container {
+    width: auto;
+    flex: 1;
+    margin: 0 8px;
+    padding: 6px 12px;
+  }
   .search-shortcut { display: none; }
-  .topbar { padding: 0 16px; }
-  .user-name, .user-profile .material-icons-round { display: none; }
-  .view-section { padding: 16px; }
-  .header-buttons { display: none; }
-  .map-container { padding: 16px; overflow-x: auto; align-items: flex-start; justify-content: flex-start; }
-  .report-header { flex-direction: column; align-items: flex-start; }
+  .partner-logo { display: none; }
+  .topbar-actions { gap: 8px; }
+
+  /* ---- MAIN LAYOUT ---- */
+  .app-container { flex-direction: column; }
+  .content-wrapper { flex-direction: column; }
+
+  /* ---- VIEW SECTIONS ---- */
+  .view-section {
+    padding: 12px;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ---- MAP VIEW HEADER ---- */
+  .view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .header-title-row { gap: 12px; }
+  .header-icon-wrap { width: 36px; height: 36px; flex-shrink: 0; }
+  .header-icon-wrap .material-icons-round { font-size: 20px; }
+  .header-text h2 { font-size: 18px; margin-bottom: 2px; }
+  .subtitle { font-size: 12px; }
+  .header-buttons {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+  .header-buttons .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .btn-sm { padding: 8px 12px; font-size: 12px; }
+
+  /* ---- MAP CONTAINER ---- */
+  .map-container {
+    padding: 12px;
+    min-height: 300px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-radius: var(--radius-md);
+  }
+  .map-controls {
+    position: sticky;
+    left: 0;
+    top: 8px;
+    transform: none;
+    flex-direction: row;
+    padding: 6px;
+    border-radius: 24px;
+    gap: 4px;
+    z-index: 100;
+  }
+
+  /* ---- AD BANNER ---- */
+  .banner-ad {
+    height: 60px;
+    margin: 8px 12px;
+    max-width: 100%;
+    font-size: 12px;
+  }
+  .sidebar-ad { display: none; }
+
+  /* ---- REPORT FORM ---- */
+  .report-page-header {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .report-page-header .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+  .report-title-area h2 { font-size: 20px; }
+
+  /* ---- BREADCRUMBS ---- */
+  .room-breadcrumbs {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+  .breadcrumb-pill {
+    flex: 1;
+    min-width: 120px;
+    padding: 10px 12px;
+  }
+  .breadcrumb-arrow { font-size: 18px; }
+  .pill-title { font-size: 13px; }
+  .pill-subtitle { font-size: 11px; }
+  .pill-icon { width: 32px; height: 32px; margin-right: 10px; }
+
+  /* ---- STATUS CARDS ---- */
+  .status-cards-container {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .status-card-content {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .status-icon { font-size: 24px; margin-right: 12px; }
+  .status-title { font-size: 14px; }
+  .status-desc { font-size: 12px; }
+
+  /* ---- ISSUE SECTION ---- */
+  .issue-section { margin-bottom: 20px; }
+  .issue-section h3 { font-size: 15px; }
+  .issue-form-container { padding: 16px; border-radius: var(--radius-md); }
+  .horizontal-grid { grid-template-columns: 1fr; gap: 10px; }
+  .horizontal-grid .issue-card { padding: 12px 16px; }
+  .issue-icon-wrap { width: 34px; height: 34px; margin-right: 12px; }
+
+  /* ---- FORM ACTIONS ---- */
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+  .form-actions .btn { width: 100%; justify-content: center; }
+
+  /* ---- FACULTY VIEW ---- */
+  .faculty-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ---- TOAST ---- */
+  .toast {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    transform: translateY(120px);
+    width: auto;
+  }
+  .toast.show {
+    transform: translateY(0);
+  }
+
+  /* ---- LEGEND MODAL ---- */
+  .modal-content { width: 95%; }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .topbar { padding: 0 8px; height: 56px; }
+  .search-container { padding: 5px 10px; }
+  .view-section { padding: 10px; }
+  .header-text h2 { font-size: 16px; }
+  .banner-ad { height: 50px; margin: 6px 8px; font-size: 11px; }
+  .room-breadcrumbs { flex-direction: column; }
+  .breadcrumb-arrow { transform: rotate(90deg); }
+  .breadcrumb-pill { min-width: 100%; }
 }
 
 /* --- AD PLACEHOLDERS --- */
