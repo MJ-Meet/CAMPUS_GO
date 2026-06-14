@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Navigation & Views
   const viewMap = document.getElementById('view-map');
   const viewReport = document.getElementById('view-report');
+  const viewFaculty = document.getElementById('view-faculty');
   const btnBack = document.getElementById('btn-back');
+  const btnBackFaculty = document.getElementById('btn-back-faculty');
   const btnCancel = document.getElementById('btn-cancel');
   
   // Mobile Sidebar
@@ -58,6 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
     currentSelectedRoom = roomElement;
     const roomName = roomElement.getAttribute('data-room-name');
     if(!roomName) return; // For stairs or empty rooms
+    if(roomName === 'Lift' || roomName === 'Washroom' || roomName === 'Restrooms') return;
+
+
+    if (roomName === 'Faculty Area') {
+      showView(viewFaculty, viewMap);
+      return;
+    }
     
     // Update breadcrumb pills
     bcRoom.textContent = roomName;
@@ -105,7 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function backToMap() {
-    showView(viewMap, viewReport);
+    viewReport.classList.remove('active');
+    if (viewFaculty) viewFaculty.classList.remove('active');
+    requestAnimationFrame(() => {
+      viewMap.classList.add('active');
+    });
   }
   
   // --- Event Listeners ---
@@ -303,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Back & Cancel Buttons
   btnBack.addEventListener('click', backToMap);
+  if (btnBackFaculty) btnBackFaculty.addEventListener('click', backToMap);
   btnCancel.addEventListener('click', backToMap);
   
   // Occupancy Toggles
