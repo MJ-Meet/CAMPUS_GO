@@ -1341,6 +1341,63 @@ textarea:focus { outline: none; border-color: var(--brand-purple); }
 
 .sidebar-overlay { display: none; }
 
+/* --- New Report View Styles --- */
+.report-page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.report-title-area { display: flex; align-items: center; }
+.report-title-area h2 { font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+.report-title-area .subtitle { color: #6B7280; font-size: 14px; margin: 0; }
+[data-theme="dark"] .report-title-area h2 { color: #F9FAFB; }
+[data-theme="dark"] .report-title-area .subtitle { color: #9CA3AF; }
+
+.room-breadcrumbs { display: flex; align-items: center; background: var(--surface-color); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 32px; gap: 16px; }
+.breadcrumb-pill { display: flex; align-items: center; background: #F9FAFB; padding: 12px 24px 12px 12px; border-radius: 8px; flex: 1; }
+[data-theme="dark"] .breadcrumb-pill { background: #1F2937; }
+.pill-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 16px; }
+.pill-title { font-weight: 600; font-size: 15px; color: var(--text-primary); }
+.pill-subtitle { font-size: 13px; color: var(--text-secondary); }
+.breadcrumb-arrow { color: #9CA3AF; font-size: 24px; }
+
+.status-cards-container { display: flex; gap: 16px; margin-bottom: 32px; }
+.status-card { flex: 1; position: relative; cursor: pointer; }
+.status-card input { position: absolute; opacity: 0; cursor: pointer; }
+.status-card-content { border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; display: flex; align-items: center; background: var(--surface-color); transition: all 0.2s; }
+.status-card:hover .status-card-content { background: #F9FAFB; }
+[data-theme="dark"] .status-card:hover .status-card-content { background: #1F2937; }
+
+/* Status Colors */
+.vacant-card input:checked ~ .status-card-content { border-color: var(--brand-green); background: var(--bg-green-light); }
+.occupied-card input:checked ~ .status-card-content { border-color: var(--brand-pink); background: var(--bg-pink-light); }
+.issue-card-status input:checked ~ .status-card-content { border-color: var(--brand-yellow); background: var(--bg-yellow-light); }
+
+.status-icon { font-size: 32px; margin-right: 16px; }
+.status-text { flex: 1; }
+.status-title { font-weight: 600; font-size: 16px; color: var(--text-primary); margin-bottom: 4px; }
+.status-desc { font-size: 13px; color: var(--text-secondary); }
+
+/* Radio Circle */
+.radio-circle { width: 24px; height: 24px; border: 2px solid #D1D5DB; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 16px; }
+.vacant-card input:checked ~ .status-card-content .radio-circle { border-color: var(--brand-green); background: var(--brand-green); }
+.occupied-card input:checked ~ .status-card-content .radio-circle { border-color: var(--brand-pink); background: var(--brand-pink); }
+.issue-card-status input:checked ~ .status-card-content .radio-circle { border-color: var(--brand-yellow); background: var(--brand-yellow); }
+
+.vacant-card input:checked ~ .status-card-content .radio-circle::after,
+.occupied-card input:checked ~ .status-card-content .radio-circle::after,
+.issue-card-status input:checked ~ .status-card-content .radio-circle::after { content: ''; width: 10px; height: 10px; background: white; border-radius: 50%; }
+
+/* Subtitle Inline */
+.subtitle-inline { font-size: 14px; color: var(--text-secondary); font-weight: 400; margin-left: 8px; }
+
+/* Horizontal Issue Grid */
+.horizontal-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.horizontal-grid .issue-card { flex-direction: row; justify-content: space-between; align-items: center; padding: 16px 20px; }
+.horizontal-grid .issue-card:hover { border-color: var(--brand-purple); background: var(--surface-color); box-shadow: 0 2px 8px rgba(90, 53, 138, 0.1); }
+.issue-card-left { display: flex; align-items: center; }
+.issue-icon-wrap { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 16px; }
+.checkbox-square { width: 20px; height: 20px; border: 2px solid #D1D5DB; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+.issue-card.selected .checkbox-square { background: var(--brand-purple); border-color: var(--brand-purple); }
+.issue-card.selected .checkbox-square::after { content: '✓'; color: white; font-size: 14px; font-weight: bold; }
+
+
 @media (max-width: 1024px) {
   .right-panel { display: none; }
 }

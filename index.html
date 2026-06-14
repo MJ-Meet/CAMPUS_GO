@@ -859,53 +859,137 @@
 
           <!-- View 2: Report an Issue Flow (Hidden by default) -->
           <section id="view-report" class="view-section">
-            <!-- Reuse previous report form structure -->
-            <div class="report-header">
-              <button id="btn-back" class="icon-button back-btn">
-                <span class="material-icons-round">arrow_back</span>
-              </button>
-              <div class="report-header-content">
-                <div class="breadcrumb"><span id="bc-building">Main Building</span> &gt; <span id="bc-floor">Floor 1</span> &gt; <span id="bc-room">102 Computer Lab</span></div>
-                <h2 id="report-room-title">102 Computer Lab</h2>
-              </div>
-              <div class="header-controls">
-                <div class="occupancy-container">
-                  <button class="btn-status vacant active" id="btn-vacant">Vacant</button>
-                  <button class="btn-status occupied" id="btn-occupied">Occupied</button>
+            <div class="report-page-header">
+              <div class="report-title-area">
+                <button id="btn-back" class="icon-button back-btn" style="margin-right: 16px;">
+                  <span class="material-icons-round">arrow_back</span>
+                </button>
+                <div>
+                  <h2>Report / Update Room</h2>
+                  <p class="subtitle">Help others by updating the status or reporting an issue.</p>
                 </div>
-                <div class="issue-toggle-container">
-                  <span class="toggle-label">Is there an issue?</span>
-                  <label class="switch">
-                    <input type="checkbox" id="issue-toggle">
-                    <span class="slider round"></span>
-                  </label>
+              </div>
+              <button id="btn-change-room" class="btn btn-outline" onclick="document.getElementById('btn-back').click()">
+                <span class="material-icons-round">edit_square</span> Change Room
+              </button>
+            </div>
+
+            <div class="room-breadcrumbs">
+              <div class="breadcrumb-pill">
+                <div class="pill-icon bg-purple-light"><span class="material-icons-round text-purple">business</span></div>
+                <div class="pill-text">
+                  <div class="pill-title" id="bc-building">Main Building</div>
+                  <div class="pill-subtitle" id="bc-floor">Floor 2</div>
+                </div>
+              </div>
+              <span class="material-icons-round breadcrumb-arrow">chevron_right</span>
+              <div class="breadcrumb-pill">
+                <div class="pill-icon bg-blue-light"><span class="material-icons-round text-blue" id="bc-icon">desktop_windows</span></div>
+                <div class="pill-text">
+                  <div class="pill-title" id="bc-room">Room 203</div>
+                  <div class="pill-subtitle" id="bc-room-type">Computer Lab</div>
                 </div>
               </div>
             </div>
 
-            <div id="issue-form-container" class="issue-form-container disabled">
+            <div id="issue-form-container" class="issue-form-container">
               <div class="issue-section">
-                <h3>What seems to be the problem?</h3>
-                <p class="section-desc">Select all that apply</p>
-                <div class="issue-grid">
-                  <div class="issue-card" data-issue="Computer"><span class="material-icons-round issue-icon">desktop_windows</span><span class="issue-name">Computer</span></div>
-                  <div class="issue-card" data-issue="Projector"><span class="material-icons-round issue-icon">videocam</span><span class="issue-name">Projector</span></div>
-                  <div class="issue-card" data-issue="Login Error"><span class="material-icons-round issue-icon">vpn_key</span><span class="issue-name">Login Error</span></div>
-                  <div class="issue-card" data-issue="AC"><span class="material-icons-round issue-icon">ac_unit</span><span class="issue-name">AC</span></div>
-                  <div class="issue-card" data-issue="Fan"><span class="material-icons-round issue-icon">mode_fan</span><span class="issue-name">Fan</span></div>
-                  <div class="issue-card" data-issue="Custom"><span class="material-icons-round issue-icon">build</span><span class="issue-name">Custom Issue</span></div>
+                <h3>1. Update Room Status</h3>
+                <div class="status-cards-container">
+                  <label class="status-card occupied-card">
+                    <input type="radio" name="room-status" value="occupied" id="radio-occupied">
+                    <div class="status-card-content">
+                      <span class="material-icons-round status-icon text-pink">schedule</span>
+                      <div class="status-text">
+                        <div class="status-title">Occupied</div>
+                        <div class="status-desc">Class is going on</div>
+                      </div>
+                      <div class="radio-circle"></div>
+                    </div>
+                  </label>
+                  <label class="status-card vacant-card">
+                    <input type="radio" name="room-status" value="vacant" id="radio-vacant" checked>
+                    <div class="status-card-content">
+                      <span class="material-icons-round status-icon text-green">check_circle</span>
+                      <div class="status-text">
+                        <div class="status-title">Vacant</div>
+                        <div class="status-desc">Room is empty and available</div>
+                      </div>
+                      <div class="radio-circle"></div>
+                    </div>
+                  </label>
+                  <label class="status-card issue-card-status">
+                    <input type="radio" name="room-status" value="issue" id="radio-issue">
+                    <div class="status-card-content">
+                      <span class="material-icons-round status-icon text-yellow">warning_amber</span>
+                      <div class="status-text">
+                        <div class="status-title">Issue / Not Working</div>
+                        <div class="status-desc">There is an issue in the room</div>
+                      </div>
+                      <div class="radio-circle"></div>
+                    </div>
+                  </label>
                 </div>
               </div>
+
+              <div class="issue-section" id="section-select-issue">
+                <h3>2. Select Issue <span class="subtitle-inline">(Select all that apply)</span></h3>
+                <div class="issue-grid horizontal-grid">
+                  <div class="issue-card" data-issue="Computer">
+                    <div class="issue-card-left">
+                      <div class="issue-icon-wrap bg-purple-light"><span class="material-icons-round text-purple">desktop_windows</span></div>
+                      <span class="issue-name">Computer not working</span>
+                    </div>
+                    <div class="checkbox-square"></div>
+                  </div>
+                  <div class="issue-card" data-issue="Projector">
+                    <div class="issue-card-left">
+                      <div class="issue-icon-wrap bg-purple-light"><span class="material-icons-round text-purple">videocam</span></div>
+                      <span class="issue-name">Projector not working</span>
+                    </div>
+                    <div class="checkbox-square"></div>
+                  </div>
+                  <div class="issue-card" data-issue="Login Error">
+                    <div class="issue-card-left">
+                      <div class="issue-icon-wrap bg-purple-light"><span class="material-icons-round text-purple">vpn_key</span></div>
+                      <span class="issue-name">Computer login error</span>
+                    </div>
+                    <div class="checkbox-square"></div>
+                  </div>
+                  <div class="issue-card" data-issue="AC">
+                    <div class="issue-card-left">
+                      <div class="issue-icon-wrap bg-purple-light"><span class="material-icons-round text-purple">ac_unit</span></div>
+                      <span class="issue-name">AC not working</span>
+                    </div>
+                    <div class="checkbox-square"></div>
+                  </div>
+                  <div class="issue-card" data-issue="Fan">
+                    <div class="issue-card-left">
+                      <div class="issue-icon-wrap bg-purple-light"><span class="material-icons-round text-purple">mode_fan</span></div>
+                      <span class="issue-name">Fan issue</span>
+                    </div>
+                    <div class="checkbox-square"></div>
+                  </div>
+                  <div class="issue-card" data-issue="Custom">
+                    <div class="issue-card-left">
+                      <div class="issue-icon-wrap bg-purple-light"><span class="material-icons-round text-purple">more_horiz</span></div>
+                      <span class="issue-name">Other (Custom issue)</span>
+                    </div>
+                    <div class="checkbox-square"></div>
+                  </div>
+                </div>
+              </div>
+
               <div class="issue-section">
-                <h3>Additional Details</h3>
+                <h3>3. Additional Details <span class="subtitle-inline">(Optional)</span></h3>
                 <div class="textarea-wrapper">
-                  <textarea id="issue-details" placeholder="Please describe the issue..." maxlength="300"></textarea>
+                  <textarea id="issue-details" placeholder="Add any additional details..." maxlength="300"></textarea>
                   <div class="char-counter"><span id="char-count">0</span>/300</div>
                 </div>
               </div>
               <div class="form-actions">
                 <button id="btn-cancel" class="btn btn-outline">Cancel</button>
-                <button id="btn-submit" class="btn btn-primary" disabled>Submit Report</button>
+                <button id="btn-submit" class="btn btn-primary">Submit Report</button>
               </div>
             </div>
           </section>

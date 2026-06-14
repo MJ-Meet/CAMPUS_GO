@@ -29,8 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bcRoom = document.getElementById('bc-room');
   
   // Report Form Elements
-  const reportRoomTitle = document.getElementById('report-room-title');
-  const issueToggle = document.getElementById('issue-toggle');
+  // reportRoomTitle removed — no longer in the DOM
   const issueFormContainer = document.getElementById('issue-form-container');
   const issueCards = document.querySelectorAll('.issue-card');
   const issueDetails = document.getElementById('issue-details');
@@ -44,15 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentBuilding = 'Main Building';
   let currentFloor = 'Floor 1';
   
-  const btnVacant = document.getElementById('btn-vacant');
-  const btnOccupied = document.getElementById('btn-occupied');
+  const radioStatusInputs = document.querySelectorAll('input[name="room-status"]');
 
   // --- View Transitions ---
   function showView(viewToShow, viewToHide) {
     viewToHide.classList.remove('active');
-    setTimeout(() => {
+    // Small RAF delay ensures CSS transition triggers properly
+    requestAnimationFrame(() => {
       viewToShow.classList.add('active');
-    }, 50);
+    });
   }
   
   function openReportView(roomElement) {
@@ -60,20 +59,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const roomName = roomElement.getAttribute('data-room-name');
     if(!roomName) return; // For stairs or empty rooms
     
-    // Update header
-    reportRoomTitle.textContent = roomName;
+    // Update breadcrumb pills
     bcRoom.textContent = roomName;
     bcBuilding.textContent = currentBuilding;
     bcFloor.textContent = currentFloor.includes('Floor') ? currentFloor : `Floor ${currentFloor}`;
     
+    // Update room type subtitle and icon
+    const bcRoomType = document.getElementById('bc-room-type');
+    const bcIcon = document.getElementById('bc-icon');
+    const inner = roomElement.querySelector('.room-inner');
+    let desc = 'Room';
+    let icon = 'meeting_room';
+    if (inner) {
+      if (inner.classList.contains('room-blue')) { desc = 'Computer Lab'; icon = 'desktop_windows'; }
+      else if (inner.classList.contains('room-green')) { desc = 'Lab'; icon = 'science'; }
+      else if (inner.classList.contains('room-yellow')) { desc = 'Facility'; icon = 'biotech'; }
+      else if (inner.classList.contains('room-pink')) { desc = 'Seminar Room'; icon = 'groups'; }
+      else if (inner.classList.contains('room-purple')) { desc = 'Classroom'; icon = 'chair'; }
+      else if (inner.classList.contains('room-restroom')) { desc = 'Restroom'; icon = 'wc'; }
+      else if (inner.classList.contains('room-neutral')) { desc = 'Facility'; icon = 'meeting_room'; }
+    }
+    if (roomName.startsWith('LH-')) { desc = 'Lecture Hall'; icon = 'class'; }
+    if (roomName === 'Lift') { desc = 'Lift'; icon = 'elevator'; }
+    else if (roomName === 'Washroom' || roomName === 'Restrooms') { desc = 'Restroom'; icon = 'wc'; }
+    if (bcRoomType) bcRoomType.textContent = desc;
+    if (bcIcon) bcIcon.textContent = icon;
+    
     // Reset Form
-    issueToggle.checked = false;
-    issueFormContainer.classList.add('disabled');
+    const defaultRadio = document.getElementById('radio-vacant');
+    if (defaultRadio) defaultRadio.checked = true;
+    
+    const sectionSelectIssue = document.getElementById('section-select-issue');
+    if (sectionSelectIssue) {
+      sectionSelectIssue.style.opacity = '0.5';
+      sectionSelectIssue.style.pointerEvents = 'none';
+    }
+    
     selectedIssues.clear();
     issueCards.forEach(card => card.classList.remove('selected'));
     issueDetails.value = '';
     charCount.textContent = '0';
-    btnSubmit.disabled = true;
+    btnSubmit.disabled = false; // Always allow submitting status
     
     showView(viewReport, viewMap);
   }
@@ -280,14 +306,47 @@ document.addEventListener('DOMContentLoaded', () => {
   btnCancel.addEventListener('click', backToMap);
   
   // Occupancy Toggles
-  if (btnVacant && btnOccupied) {
-    btnVacant.addEventListener('click', () => {
-      btnVacant.classList.add('active');
-      btnOccupied.classList.remove('active');
-    });
-    btnOccupied.addEventListener('click', () => {
-      btnOccupied.classList.add('active');
-      btnVacant.classList.remove('active');
+  if (radioStatusInputs.length > 0) {
+    radioStatusInputs.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (currentSelectedRoom) {
+          if (val === 'vacant') {
+            currentSelectedRoom.style.border = '2px solid var(--brand-green)';
+            const inner = currentSelectedRoom.querySelector('.room-inner');
+            if (inner) {
+              inner.style.backgroundColor = 'var(--bg-green-light)';
+              inner.style.color = 'var(--text-green)';
+            }
+          } else if (val === 'occupied') {
+            currentSelectedRoom.style.border = '2px solid var(--brand-pink)';
+            const inner = currentSelectedRoom.querySelector('.room-inner');
+            if (inner) {
+              inner.style.backgroundColor = 'var(--bg-pink-light)';
+              inner.style.color = 'var(--text-pink)';
+            }
+          } else if (val === 'issue') {
+            currentSelectedRoom.style.border = '2px solid var(--brand-yellow)';
+            const inner = currentSelectedRoom.querySelector('.room-inner');
+            if (inner) {
+              inner.style.backgroundColor = 'var(--bg-yellow-light)';
+              inner.style.color = 'var(--text-yellow)';
+            }
+          }
+        }
+        
+        // Disable/enable issue section
+        const sectionSelectIssue = document.getElementById('section-select-issue');
+        if (sectionSelectIssue) {
+          if (val === 'issue') {
+             sectionSelectIssue.style.opacity = '1';
+             sectionSelectIssue.style.pointerEvents = 'auto';
+          } else {
+             sectionSelectIssue.style.opacity = '0.5';
+             sectionSelectIssue.style.pointerEvents = 'none';
+          }
+        }
+      });
     });
   }
   
@@ -419,21 +478,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Form Logic: Issue Toggle Switch
-  issueToggle.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      issueFormContainer.classList.remove('disabled');
-      updateSubmitButton();
-    } else {
-      issueFormContainer.classList.add('disabled');
-      btnSubmit.disabled = true;
-    }
-  });
+  // Removed old issue toggle logic
   
   // Form Logic: Issue Cards Multi-select
   issueCards.forEach(card => {
     card.addEventListener('click', () => {
-      if (!issueToggle.checked) return;
+      const selectedRadio = document.querySelector('input[name="room-status"]:checked');
+      if (!selectedRadio || selectedRadio.value !== 'issue') return;
       
       const issueName = card.getAttribute('data-issue');
       if (selectedIssues.has(issueName)) {
@@ -455,11 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   function updateSubmitButton() {
-    if (selectedIssues.size > 0 || issueDetails.value.trim().length > 0) {
-      btnSubmit.disabled = false;
-    } else {
-      btnSubmit.disabled = true;
-    }
+    btnSubmit.disabled = false; // Always allow submit with new UI
   }
   
   // Form Logic: Submit Report
@@ -469,10 +516,8 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.classList.remove('show');
     }, 3000);
     
-    if (currentSelectedRoom) {
-      // Mock issue styling
-      currentSelectedRoom.style.border = '2px solid var(--brand-pink)';
-    }
+    // Action performed previously when status changes
+    // Add logic here to sync backend or whatever
     backToMap();
   });
   
