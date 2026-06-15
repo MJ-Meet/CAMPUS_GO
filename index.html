@@ -953,12 +953,23 @@
                 <h3>1. Update Room Status</h3>
                 <div class="status-cards-container">
                   <label class="status-card occupied-card">
-                    <input type="radio" name="room-status" value="occupied" id="radio-occupied">
+                    <input type="radio" name="room-status" value="occupied" id="radio-occupied" checked>
+                    <div class="status-card-content">
+                      <span class="material-icons-round status-icon text-pink">schedule</span>
+                      <div class="status-text">
+                        <div class="status-title">Occupied</div>
+                        <div class="status-desc">Class is going on</div>
+                      </div>
+                      <div class="radio-circle"></div>
+                    </div>
+                  </label>
+                  <label class="status-card vacant-card">
+                    <input type="radio" name="room-status" value="vacant" id="radio-vacant">
                     <div class="status-card-content">
                       <span class="material-icons-round status-icon text-green">check_circle</span>
                       <div class="status-text">
-                        <div class="status-title">Occupied / Working</div>
-                        <div class="status-desc">Class is going on / Everything is working</div>
+                        <div class="status-title">Vacant</div>
+                        <div class="status-desc">Room is empty and available</div>
                       </div>
                       <div class="radio-circle"></div>
                     </div>
@@ -966,7 +977,7 @@
                   <label class="status-card issue-card-status">
                     <input type="radio" name="room-status" value="issue" id="radio-issue">
                     <div class="status-card-content">
-                      <span class="material-icons-round status-icon text-pink">warning_amber</span>
+                      <span class="material-icons-round status-icon text-yellow">warning_amber</span>
                       <div class="status-text">
                         <div class="status-title">Issue / Not Working</div>
                         <div class="status-desc">There is an issue in the room</div>

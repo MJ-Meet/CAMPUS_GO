@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bcRoomType) bcRoomType.textContent = desc;
     if (bcIcon) bcIcon.textContent = icon;
     
-    // Reset Form — default to "Occupied / Working"
+    // Reset Form — default to "Occupied"
     const defaultRadio = document.getElementById('radio-occupied');
     if (defaultRadio) defaultRadio.checked = true;
     
