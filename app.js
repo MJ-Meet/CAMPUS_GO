@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bcRoomType) bcRoomType.textContent = desc;
     if (bcIcon) bcIcon.textContent = icon;
     
-    // Reset Form
-    const defaultRadio = document.getElementById('radio-vacant');
+    // Reset Form — default to "Occupied / Working"
+    const defaultRadio = document.getElementById('radio-occupied');
     if (defaultRadio) defaultRadio.checked = true;
     
     const sectionSelectIssue = document.getElementById('section-select-issue');
@@ -524,16 +524,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // Form Logic: Submit Report
-  btnSubmit.addEventListener('click', () => {
+  function doSubmitReport() {
     toast.classList.add('show');
     setTimeout(() => {
       toast.classList.remove('show');
     }, 3000);
-    
-    // Action performed previously when status changes
-    // Add logic here to sync backend or whatever
     backToMap();
+  }
+
+  btnSubmit.addEventListener('click', doSubmitReport);
+
+  // Mobile sticky submit button
+  const btnSubmitMobile = document.getElementById('btn-submit-mobile');
+  if (btnSubmitMobile) {
+    btnSubmitMobile.addEventListener('click', doSubmitReport);
+  }
+
+  // Show/hide sticky bar based on active view
+  const stickyBar = document.querySelector('.sticky-submit-bar');
+  function updateStickyBar() {
+    if (!stickyBar) return;
+    if (viewReport.classList.contains('active')) {
+      stickyBar.style.display = 'block';
+    } else {
+      stickyBar.style.display = 'none';
+    }
+  }
+
+  // Override showView to also update sticky bar
+  const originalShowView = showView;
+  function showViewWithStickyUpdate(viewToShow, viewToHide) {
+    viewToHide.classList.remove('active');
+    requestAnimationFrame(() => {
+      viewToShow.classList.add('active');
+      updateStickyBar();
+    });
+  }
+
+  // Patch openReportView to use updated function
+  rooms.forEach(room => {
+    if (room.id.includes('stairs')) return;
+    // Already bound above; we re-add the sticky update after view switch
   });
+
+  // Observe class changes on viewReport to toggle sticky bar
+  const reportObserver = new MutationObserver(updateStickyBar);
+  reportObserver.observe(viewReport, { attributes: true, attributeFilter: ['class'] });
+  updateStickyBar();
   
   // Legend Modal Logic
   const legendBtn = document.getElementById('legend-btn');

@@ -113,6 +113,10 @@
         <button id="mobile-menu-btn" class="icon-button mobile-only">
           <span class="material-icons-round">menu</span>
         </button>
+        <!-- Mobile Brand (logo + name, shown only on mobile) -->
+        <div class="mobile-brand">
+          <img src="CampusGoLogo.png" alt="Campus Go" class="brand-logo-img">
+        </div>
         <div class="search-container">
           <span class="material-icons-round search-icon">search</span>
           <input type="text" id="search-input" placeholder="Search for a room, lab, facility..." class="search-input">
@@ -125,6 +129,8 @@
           <div class="partner-logo">
             <img src="CopyKatlogo.jpeg" alt="CopyKat Logo" style="height: 40px; width: auto; border-radius: 8px;">
           </div>
+          <!-- Mobile Avatar -->
+          <div class="mobile-avatar">A</div>
         </div>
       </header>
 
@@ -937,6 +943,11 @@
               </div>
             </div>
 
+            <!-- Mobile-only Change Room Button (shown below breadcrumbs) -->
+            <button class="btn btn-outline mobile-change-room-btn" style="display:none;" onclick="document.getElementById('btn-back').click()">
+              <span class="material-icons-round">edit_square</span> Change Room
+            </button>
+
             <div id="issue-form-container" class="issue-form-container">
               <div class="issue-section">
                 <h3>1. Update Room Status</h3>
@@ -944,21 +955,10 @@
                   <label class="status-card occupied-card">
                     <input type="radio" name="room-status" value="occupied" id="radio-occupied">
                     <div class="status-card-content">
-                      <span class="material-icons-round status-icon text-pink">schedule</span>
-                      <div class="status-text">
-                        <div class="status-title">Occupied</div>
-                        <div class="status-desc">Class is going on</div>
-                      </div>
-                      <div class="radio-circle"></div>
-                    </div>
-                  </label>
-                  <label class="status-card vacant-card">
-                    <input type="radio" name="room-status" value="vacant" id="radio-vacant" checked>
-                    <div class="status-card-content">
                       <span class="material-icons-round status-icon text-green">check_circle</span>
                       <div class="status-text">
-                        <div class="status-title">Vacant</div>
-                        <div class="status-desc">Room is empty and available</div>
+                        <div class="status-title">Occupied / Working</div>
+                        <div class="status-desc">Class is going on / Everything is working</div>
                       </div>
                       <div class="radio-circle"></div>
                     </div>
@@ -966,7 +966,7 @@
                   <label class="status-card issue-card-status">
                     <input type="radio" name="room-status" value="issue" id="radio-issue">
                     <div class="status-card-content">
-                      <span class="material-icons-round status-icon text-yellow">warning_amber</span>
+                      <span class="material-icons-round status-icon text-pink">warning_amber</span>
                       <div class="status-text">
                         <div class="status-title">Issue / Not Working</div>
                         <div class="status-desc">There is an issue in the room</div>
@@ -1034,10 +1034,19 @@
               </div>
               <div class="form-actions">
                 <button id="btn-cancel" class="btn btn-outline">Cancel</button>
-                <button id="btn-submit" class="btn btn-primary">Submit Report</button>
+                <button id="btn-submit" class="btn btn-primary">
+                  <span class="material-icons-round">send</span> Submit Report
+                </button>
               </div>
             </div>
           </section>
+
+          <!-- Sticky Submit Bar (mobile only) -->
+          <div class="sticky-submit-bar">
+            <button id="btn-submit-mobile" class="btn btn-primary">
+              <span class="material-icons-round">send</span> Submit Report
+            </button>
+          </div>
 
           <!-- View 3: Faculty Area -->
           <section id="view-faculty" class="view-section">
