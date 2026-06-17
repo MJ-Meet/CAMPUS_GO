@@ -63,7 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
     currentSelectedRoom = roomElement;
     const roomName = roomElement.getAttribute('data-room-name');
     if(!roomName) return; // For stairs or empty rooms
-    if(roomName === 'Lift' || roomName === 'Washroom' || roomName === 'Restrooms') return;
+    if (
+      roomName === 'Lift' ||
+      roomName === 'Washroom' ||
+      roomName === 'Restrooms' ||
+      roomName === 'Stairs' ||
+      roomName === 'Student Section' ||
+      roomName === 'Library'
+    ) return;
 
 
     if (roomName === 'Faculty Area') {
@@ -344,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Room Interactions
   rooms.forEach(room => {
-    if(room.id.includes('stairs')) return;
+    if(room.id.includes('stair') || room.id.includes('stairs')) return;
     room.addEventListener('click', () => openReportView(room));
   });
   

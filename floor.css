@@ -1371,6 +1371,7 @@ body {
 #m-f1-stair-bot  { grid-column: 1 / 2; grid-row: 5 / 6; z-index: 3; }
 /* Lift is inside the bottom corridor — architecturally correct (lift in corridor zone) */
 #m-f1-lift       { grid-column: 6 / 7; grid-row: 5 / 6; z-index: 3; }
+#m-f1-mba-seminar { grid-column: 7 / 8; grid-row: 4 / 5; z-index: 3; }
 
 /* 2d. Main Building - Floor 2
    Col:  1=80px  2=80px  3=80px  4=30px  5=80px  6=80px  7=100px  8=140px  9=130px
@@ -1750,18 +1751,24 @@ textarea:focus { outline: none; border-color: var(--brand-purple); }
   /* ---- TOPBAR ---- */
   .mobile-only { display: flex !important; }
   .topbar {
-    padding: 0 14px;
-    height: 60px;
-    gap: 0;
+    padding: 10px 14px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 10px;
   }
-  /* Hide search on mobile topbar — show only hamburger + brand + avatar */
-  .search-container { display: none; }
+  #mobile-menu-btn { order: 1; }
+  .mobile-brand { order: 2; display: flex; }
+  .topbar-actions { order: 3; gap: 8px; }
+  .search-container {
+    display: flex !important;
+    width: 100%;
+    order: 4;
+  }
+  .search-shortcut {
+    display: none !important;
+  }
   .partner-logo { display: none; }
   .theme-toggle-btn { display: none !important; }
-  .topbar-actions { gap: 8px; }
-
-  /* Show mobile brand in topbar */
-  .mobile-brand { display: flex; }
 
   /* Show CopyKat logo as circular avatar on mobile */
   .partner-logo { display: flex !important; }
@@ -1988,7 +1995,7 @@ textarea:focus { outline: none; border-color: var(--brand-purple); }
 
 /* Extra small screens */
 @media (max-width: 400px) {
-  .topbar { padding: 0 10px; height: 56px; }
+  .topbar { padding: 8px 10px; height: auto; }
   .view-section { padding: 12px; }
   #view-report { padding-bottom: 84px; }
   .header-text h2 { font-size: 16px; }
