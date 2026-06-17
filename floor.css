@@ -845,6 +845,11 @@ body {
 .main-map .room { padding: 4px; }
 .main-map .room-label { font-size: 14px; margin-bottom: 2px; }
 .main-map .room-type { font-size: 10px; }
+.main-map-ground .room { padding: 6px; }
+.main-map-ground .room-label { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+/* Student Section spans 2 rows so we need it to stretch */
+#m-g-student-section { align-self: stretch; }
+#m-g-stair-r { align-self: stretch; }
 
 /* Hallway Outline */
 .hallway {
@@ -1207,45 +1212,235 @@ body {
 
 #b5-washroom { grid-column: 12 / 13; grid-row: 7 / 8; }
 
-/* 2. Main Building (Inverted L: Left Vertical, Top Horizontal) */
-.main-map {
+/* 2. Main Building - Basement
+   Layout matches reference image:
+
+   Col:  1=70px  2=55px  3=35px  4=390px  5=90px  6=55px  7=70px
+   Row:  1=130px  2=50px  3=80px
+
+   Row1: [  ]  [  ]  [hallV]  [=== AUDITORIUM ===]  [WR-R]  [  ]  [  ]
+   Row2: [  ]  [  ]  [=== horizontal hallway (col3-7) ===]  [  ]
+   Row3: [WRL] [StL] [      ]  [                 ]  [LH  ]  [ ] [StR]
+
+   Hallway-v = narrow left connector strip (left of auditorium)
+   Hallway-h = main horizontal corridor below auditorium
+   WR-R sits directly above LH (same column, row 1 vs row 3)
+*/
+.main-map-basement {
   display: grid;
-  grid-template-columns: 140px 100px repeat(4, 110px) 100px;
-  grid-template-rows: 90px 40px repeat(4, 90px);
-  gap: 6px;
+  grid-template-columns: 70px 55px 35px 390px 90px 55px 70px;
+  grid-template-rows: 130px 50px 80px;
+  gap: 10px;
   padding: 20px;
+  min-width: 850px;
 }
 
-/* Rooms Row 1 */
-#m-room-101 { grid-column: 1 / 3; grid-row: 1 / 2; }
-#m-room-102 { grid-column: 3 / 4; grid-row: 1 / 2; }
-#m-room-103 { grid-column: 4 / 5; grid-row: 1 / 2; }
-#m-room-restrooms { grid-column: 5 / 6; grid-row: 1 / 2; }
-#m-room-105 { grid-column: 6 / 8; grid-row: 1 / 2; }
-
-/* The Hallway (Inverted L: Horizontal top, Vertical left) */
-.main-hallway {
-  grid-column: 2 / 8;
-  grid-row: 2 / 3;
-  border-left: none; 
-}
-.main-hallway::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: -4px; 
-  width: 90px; 
-  height: 380px;
-  background-color: #F8F9FA;
-  border: 4px solid #C5C9CF;
-  border-top: none;
+/* Narrow left vertical connector — sits to the left of auditorium */
+.main-basement-hallway-v {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  border-bottom: none;
   z-index: 1;
 }
 
-/* Rooms Column Left (under 101) */
-#m-room-106 { grid-column: 1 / 2; grid-row: 3 / 4; margin-right: 20px; }
-#m-room-107 { grid-column: 1 / 2; grid-row: 4 / 5; margin-right: 20px; }
-#m-room-108 { grid-column: 1 / 2; grid-row: 5 / 6; margin-right: 20px; }
+/* Main horizontal hallway below auditorium */
+.main-basement-hallway-h {
+  grid-column: 3 / 7;
+  grid-row: 2 / 3;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  z-index: 1;
+}
+
+/* Basement rooms */
+#m-b-auditorium   { grid-column: 4 / 5; grid-row: 1 / 2; z-index: 2; }
+#m-b-washroom-l   { grid-column: 1 / 2; grid-row: 3 / 4; z-index: 2; }
+#m-b-stair-l      { grid-column: 2 / 3; grid-row: 3 / 4; z-index: 2; }
+#m-b-washroom-r   { grid-column: 5 / 6; grid-row: 1 / 2; z-index: 2; }
+#m-b-lh           { grid-column: 5 / 6; grid-row: 3 / 4; z-index: 2; }
+#m-b-stair-r      { grid-column: 7 / 8; grid-row: 3 / 4; z-index: 2; }
+
+/* 2b. Main Building - Ground Floor
+   Col:  1=80px  2=40px  3=80px  4=20px  5=80px  6=140px  7=140px  8=100px  9=75px
+   Row:  1=80px  2=28px  3=80px  4=50px  5=90px
+
+   LH Wing: 4 rooms at corners of a rectangular corridor (cols 1-3, rows 1-3)
+     [LH-1] ~corridor~ [LH-2]
+     ~~~~~corridor~~~~~
+     [LH-3] ~corridor~ [LH-4]
+
+   Rest: Lift(col5,rows2-3), StudentSection(col6-8,rows1-3)
+   Hallway row 4, Bottom rooms row 5, StairR col9
+*/
+.main-map-ground {
+  display: grid;
+  grid-template-columns: 80px 40px 80px 20px 80px 140px 140px 100px 75px;
+  grid-template-rows: 80px 28px 80px 50px 90px;
+  gap: 10px;
+  padding: 20px;
+  min-width: 900px;
+}
+
+/* LH wing rectangular corridor - 4 LH rooms sit at its corners */
+.main-ground-hallway-v {
+  grid-column: 1 / 4;
+  grid-row: 1 / 4;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  border-bottom: none;
+  z-index: 1;
+}
+
+/* Main horizontal hallway across the floor */
+.main-ground-hallway-h {
+  grid-column: 1 / 9;
+  grid-row: 4 / 5;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  z-index: 1;
+}
+
+/* Ground Floor rooms */
+#m-g-lh1             { grid-column: 1 / 2; grid-row: 1 / 2; z-index: 3; }
+#m-g-lh2             { grid-column: 3 / 4; grid-row: 1 / 2; z-index: 3; }
+#m-g-lh3             { grid-column: 1 / 2; grid-row: 3 / 4; z-index: 3; }
+#m-g-lh4             { grid-column: 3 / 4; grid-row: 3 / 4; z-index: 3; }
+#m-g-lift            { grid-column: 5 / 6; grid-row: 2 / 4; z-index: 2; align-self: stretch; }
+#m-g-student-section { grid-column: 6 / 9; grid-row: 1 / 4; z-index: 2; align-self: stretch; }
+#m-g-washroom        { grid-column: 1 / 2; grid-row: 5 / 6; z-index: 2; }
+#m-g-stair-l         { grid-column: 3 / 4; grid-row: 5 / 6; z-index: 2; }
+#m-g-cyber-lab       { grid-column: 5 / 7; grid-row: 5 / 6; z-index: 2; }
+#m-g-computer-lab    { grid-column: 7 / 9; grid-row: 5 / 6; z-index: 2; }
+#m-g-stair-r         { grid-column: 9 / 10; grid-row: 4 / 6; z-index: 2; align-self: stretch; }
+
+/* 2c. Main Building - Floor 1
+   Col:  1=80px  2=80px  3=80px  4=30px  5=110px  6=80px  7=200px
+   Row:  1=80px  2=30px  3=80px  4=80px  5=80px
+*/
+.main-map {
+  display: grid;
+  grid-template-columns: 80px 80px 80px 30px 110px 80px 200px;
+  grid-template-rows: 80px 30px 80px 80px 80px;
+  gap: 10px;
+  padding: 20px;
+  min-width: 820px;
+}
+
+/* LH wing rectangular frame */
+.main-hallway {
+  grid-column: 1 / 4;
+  grid-row: 1 / 4;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  border-bottom: none;
+  z-index: 1;
+}
+
+/* Narrow left arm — col2 only, connects LH wing down.
+   Starts at row3 to show corridor gap between LH-3 and LH-4. */
+.main-hallway-arm {
+  grid-column: 2 / 3;
+  grid-row: 3 / 6;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  border-top: none;
+  border-bottom: none;
+  z-index: 1;
+}
+
+/* Bottom horizontal corridor */
+.main-hallway-bot {
+  grid-column: 2 / 8;
+  grid-row: 5 / 6;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  z-index: 1;
+}
+
+/* Floor 1 rooms */
+#m-f1-lh1        { grid-column: 1 / 2; grid-row: 1 / 2; z-index: 3; }
+#m-f1-stair-top  { grid-column: 2 / 3; grid-row: 1 / 2; z-index: 3; }
+#m-f1-lh2        { grid-column: 3 / 4; grid-row: 1 / 2; z-index: 3; }
+#m-f1-lh3        { grid-column: 1 / 2; grid-row: 3 / 4; z-index: 3; }
+#m-f1-lh4        { grid-column: 3 / 4; grid-row: 3 / 4; z-index: 3; }
+/* Washroom & Stair-bot at col1 — to the LEFT of the arm (col2).
+   They open INTO the arm from the side, not inside the walking corridor. */
+#m-f1-washroom   { grid-column: 1 / 2; grid-row: 4 / 5; z-index: 3; }
+#m-f1-stair-bot  { grid-column: 1 / 2; grid-row: 5 / 6; z-index: 3; }
+/* Lift is inside the bottom corridor — architecturally correct (lift in corridor zone) */
+#m-f1-lift       { grid-column: 6 / 7; grid-row: 5 / 6; z-index: 3; }
+
+/* 2d. Main Building - Floor 2
+   Col:  1=80px  2=80px  3=80px  4=30px  5=80px  6=80px  7=100px  8=140px  9=130px
+   Row:  1=80px  2=30px  3=80px  4=80px  5=110px
+
+   Row1: [LH-1] [Stair] [LH-2]  corridor...
+   Row2: [LH wing strip] ...
+   Row3: [LH-3] [arm]  [LH-4]  ...
+   Row4: [WRoom][arm][corridor: Lift][corridor][corr][Library]
+   Row5: [Stair][   ][        ][CompLab      ][Library]
+
+   3 hallway divs:
+   - main-f2-hallway-h  : LH wing frame (col1/4, row1/4), no bottom border
+   - main-f2-hallway-v  : left arm col2 (row3/5), no top/bottom border
+   - main-f2-hallway-bot: bottom corridor (col2/9, row4/5)
+*/
+.main-map-f2 {
+  display: grid;
+  grid-template-columns: 80px 80px 80px 30px 80px 80px 100px 140px 130px;
+  grid-template-rows: 80px 30px 80px 80px 110px;
+  gap: 10px;
+  padding: 20px;
+  min-width: 900px;
+}
+
+/* LH wing rectangular frame */
+.main-f2-hallway-h {
+  grid-column: 1 / 4;
+  grid-row: 1 / 4;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  border-bottom: none;
+  z-index: 1;
+}
+
+/* Narrow left arm — col2, connects LH wing down to corridor */
+.main-f2-hallway-v {
+  grid-column: 2 / 3;
+  grid-row: 3 / 5;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  border-top: none;
+  border-bottom: none;
+  z-index: 1;
+}
+
+/* Bottom horizontal corridor — wide, stops before Library column */
+.main-f2-hallway-bot {
+  grid-column: 2 / 9;
+  grid-row: 4 / 5;
+  background-color: var(--map-hallway-bg);
+  border: 4px solid var(--map-hallway-border);
+  z-index: 1;
+}
+
+/* Floor 2 rooms */
+#m-f2-lh1          { grid-column: 1 / 2; grid-row: 1 / 2; z-index: 3; }
+#m-f2-stair-top    { grid-column: 2 / 3; grid-row: 1 / 2; z-index: 3; }
+#m-f2-lh2          { grid-column: 3 / 4; grid-row: 1 / 2; z-index: 3; }
+#m-f2-lh3          { grid-column: 1 / 2; grid-row: 3 / 4; z-index: 3; }
+#m-f2-lh4          { grid-column: 3 / 4; grid-row: 3 / 4; z-index: 3; }
+/* Washroom & Stair-bot: col1, LEFT of arm — open into corridor from side */
+#m-f2-washroom     { grid-column: 1 / 2; grid-row: 4 / 5; z-index: 3; }
+#m-f2-stair-bot    { grid-column: 1 / 2; grid-row: 5 / 6; z-index: 3; }
+/* Lift: inside bottom corridor at row4 */
+#m-f2-lift         { grid-column: 6 / 7; grid-row: 4 / 5; z-index: 3; }
+/* Computer Lab: BELOW the corridor (row5), right-center */
+#m-f2-computer-lab { grid-column: 7 / 9; grid-row: 5 / 6; z-index: 3; align-self: stretch; }
+/* Library: tall room at far right, spans row4+row5 */
+#m-f2-library      { grid-column: 9 / 10; grid-row: 4 / 6; z-index: 3; align-self: stretch; }
 
 /* You Are Here Pin */
 .you-are-here {
@@ -1263,6 +1458,81 @@ body {
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
+}
+
+.search-shortcut {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--bg-color);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+/* Search Results Dropdown */
+.search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results.hidden {
+  display: none;
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s ease;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: var(--bg-color);
+}
+
+.search-result-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.search-result-location {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.search-result-empty {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 
 .legend-badge {

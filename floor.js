@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const floorItems = document.querySelectorAll('.floor-item');
   const mapTitle = document.getElementById('map-title');
   const mainMap = document.getElementById('main-map');
+  const mainMapBasement = document.getElementById('main-map-basement');
+  const mainMapGround = document.getElementById('main-map-ground');
+  const mainMapF2 = document.getElementById('main-map-f2');
   const bhawarMap = document.getElementById('bhawar-map');
   const bhawarMap1 = document.getElementById('bhawar-map-1');
   const bhawarMap2 = document.getElementById('bhawar-map-2');
@@ -147,18 +150,43 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (buildingData === 'Main') {
         currentBuilding = 'Main Building';
-        mapTitle.textContent = `Main Building – ${floorText}`;
-        mainMap.classList.remove('hidden');
+        let floorLabel = floorData === 'B' ? 'Basement' : floorData === 'G' ? 'Ground Floor' : `Floor ${floorData}`;
+        mapTitle.textContent = `Main Building – ${floorLabel}`;
+        currentFloor = floorLabel;
+
+        // Hide all Main Building maps
+        mainMap.classList.add('hidden');
+        if (mainMapBasement) mainMapBasement.classList.add('hidden');
+        if (mainMapGround) mainMapGround.classList.add('hidden');
+        if (mainMapF2) mainMapF2.classList.add('hidden');
+
+        // Hide all Bhawar maps
         bhawarMap.classList.add('hidden');
         if (bhawarMap1) bhawarMap1.classList.add('hidden');
         if (bhawarMap2) bhawarMap2.classList.add('hidden');
         if (bhawarMap3) bhawarMap3.classList.add('hidden');
         if (bhawarMap4) bhawarMap4.classList.add('hidden');
         if (bhawarMap5) bhawarMap5.classList.add('hidden');
+
+        // Show the appropriate Main Building map
+        if (floorData === 'B') {
+          if (mainMapBasement) mainMapBasement.classList.remove('hidden');
+        } else if (floorData === 'G') {
+          if (mainMapGround) mainMapGround.classList.remove('hidden');
+        } else if (floorData === '2') {
+          if (mainMapF2) mainMapF2.classList.remove('hidden');
+        } else {
+          mainMap.classList.remove('hidden'); // Floor 1 (default)
+        }
       } else {
         currentBuilding = 'Bhawar Building';
         mapTitle.textContent = `Bhawar Building – ${floorText}`;
+        
+        // Hide all Main Building maps
         mainMap.classList.add('hidden');
+        if (mainMapBasement) mainMapBasement.classList.add('hidden');
+        if (mainMapGround) mainMapGround.classList.add('hidden');
+        if (mainMapF2) mainMapF2.classList.add('hidden');
         
         // Hide all Bhawar maps initially
         bhawarMap.classList.add('hidden');
@@ -211,6 +239,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let activeMap;
     if (!mainMap.classList.contains('hidden')) {
       activeMap = mainMap;
+    } else if (mainMapBasement && !mainMapBasement.classList.contains('hidden')) {
+      activeMap = mainMapBasement;
+    } else if (mainMapGround && !mainMapGround.classList.contains('hidden')) {
+      activeMap = mainMapGround;
+    } else if (mainMapF2 && !mainMapF2.classList.contains('hidden')) {
+      activeMap = mainMapF2;
     } else if (!bhawarMap.classList.contains('hidden')) {
       activeMap = bhawarMap;
     } else if (bhawarMap1 && !bhawarMap1.classList.contains('hidden')) {
@@ -462,25 +496,109 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Search Logic
   const searchInput = document.getElementById('search-input');
-  if (searchInput) {
+  const searchResults = document.getElementById('search-results');
+
+  if (searchInput && searchResults) {
+    // Helper to get floor info
+    function getFloorInfo(room) {
+      const map = room.closest('.floor-map');
+      if (!map) return { building: '', floor: '' };
+      
+      let building = 'Unknown';
+      let floor = '';
+
+      if (map.classList.contains('main-map-basement')) { building = 'Main Building'; floor = 'Basement'; }
+      else if (map.classList.contains('main-map-ground')) { building = 'Main Building'; floor = 'Ground Floor'; }
+      else if (map.classList.contains('main-map-f2')) { building = 'Main Building'; floor = 'Floor 2'; }
+      else if (map.id === 'main-map') { building = 'Main Building'; floor = 'Floor 1'; }
+      else if (map.id === 'bhawar-map') { building = 'Bhawar Building'; floor = 'Ground Floor'; }
+      else if (map.classList.contains('bhawar-map-1')) { building = 'Bhawar Building'; floor = 'Floor 1'; }
+      else if (map.classList.contains('bhawar-map-2')) { building = 'Bhawar Building'; floor = 'Floor 2'; }
+      else if (map.classList.contains('bhawar-map-3')) { building = 'Bhawar Building'; floor = 'Floor 3'; }
+      else if (map.classList.contains('bhawar-map-4')) { building = 'Bhawar Building'; floor = 'Floor 4'; }
+      else if (map.classList.contains('bhawar-map-5')) { building = 'Bhawar Building'; floor = 'Floor 5'; }
+
+      return { building, floor };
+    }
+
     searchInput.addEventListener('input', (e) => {
       const searchTerm = e.target.value.toLowerCase().trim();
       const allRooms = document.querySelectorAll('.room');
       
+      // Clear previous results
+      searchResults.innerHTML = '';
+      
       if (searchTerm === '') {
-        // Reset all highlights
+        searchResults.classList.add('hidden');
         allRooms.forEach(room => room.classList.remove('highlight-pulse'));
         return;
       }
       
+      searchResults.classList.remove('hidden');
+      
+      let matchCount = 0;
       allRooms.forEach(room => {
         const roomName = (room.dataset.roomName || '').toLowerCase();
         if (roomName.includes(searchTerm)) {
           room.classList.add('highlight-pulse');
+          matchCount++;
+          
+          // Create result item
+          const info = getFloorInfo(room);
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <div class="search-result-name">${room.dataset.roomName || 'Unknown Room'}</div>
+            <div class="search-result-location">
+              <span class="material-icons-round" style="font-size: 14px;">place</span>
+              ${info.building} • ${info.floor}
+            </div>
+          `;
+          
+          // Click to navigate
+          item.addEventListener('click', () => {
+             // Find the corresponding sidebar floor item and click it!
+             let queryFloor = info.floor.replace('Floor ', '');
+             if (info.floor === 'Ground Floor') queryFloor = 'G';
+             if (info.floor === 'Basement') queryFloor = 'B';
+             
+             let buildingId = info.building === 'Main Building' ? 'Main' : 'Bhawar';
+             
+             const floorItemToClick = document.querySelector(`.floor-list[data-building="${buildingId}"] .floor-item[data-floor="${queryFloor}"]`);
+             
+             if (floorItemToClick) {
+               // Ensure the accordion is open
+               const accordionBody = floorItemToClick.closest('.accordion-body');
+               const accordionItem = floorItemToClick.closest('.accordion-item');
+               if (accordionItem && !accordionItem.classList.contains('active')) {
+                 accordionItem.querySelector('.accordion-header').click();
+               }
+               
+               // Click the floor
+               floorItemToClick.click();
+             }
+             
+             // Hide search results
+             searchResults.classList.add('hidden');
+             searchInput.value = '';
+          });
+          
+          searchResults.appendChild(item);
         } else {
           room.classList.remove('highlight-pulse');
         }
       });
+      
+      if (matchCount === 0) {
+        searchResults.innerHTML = `<div class="search-result-empty">No matching rooms found</div>`;
+      }
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-container')) {
+        searchResults.classList.add('hidden');
+      }
     });
   }
   

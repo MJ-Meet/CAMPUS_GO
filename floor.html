@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Go</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="floor.css">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+
+<body>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+  <div class="app-container">
+    <!-- Left Navigation Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-container">
+          <img src="CampusGoLogo.png" alt="Campus Go Logo" class="main-logo">
+        </div>
+      </div>
+      <div class="sidebar-content">
+        <h2 class="nav-header">BUILDINGS</h2>
+        <div class="accordion">
+          <!-- Main Building Accordion -->
+          <div class="accordion-item active" id="main-building-accordion">
+            <button class="accordion-header building-card main-building-card">
+              <div class="building-icon-wrap main-building-icon">
+                <span class="material-icons-round">domain</span>
+              </div>
+              <div class="building-info">
+                <span class="building-name">Main Building</span>
+                <span class="building-floors">4 Floors + Basement</span>
+              </div>
+              <span class="material-icons-round chevron">expand_more</span>
+            </button>
+            <div class="accordion-body">
+              <div class="floor-list-title">Select Floor</div>
+              <ul class="floor-list" data-building="Main">
+                <li class="floor-item" data-floor="B">
+                  <span class="material-icons-round floor-icon main-floor-icon">basement</span>
+                  Basement
+                </li>
+                <li class="floor-item" data-floor="G">
+                  <span class="material-icons-round floor-icon main-floor-icon">layers</span>
+                  Ground Floor
+                </li>
+                <li class="floor-item active" data-floor="1">
+                  <span class="material-icons-round floor-icon main-floor-icon">layers</span>
+                  Floor 1
+                </li>
+                <li class="floor-item" data-floor="2">
+                  <span class="material-icons-round floor-icon main-floor-icon">layers</span>
+                  Floor 2
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Bhawar Building Accordion -->
+          <div class="accordion-item" id="bhawar-building-accordion">
+            <button class="accordion-header building-card bhawar-building-card">
+              <div class="building-icon-wrap bhawar-building-icon">
+                <span class="material-icons-round">business</span>
+              </div>
+              <div class="building-info">
+                <span class="building-name">Bhawar Building</span>
+                <span class="building-floors">6 Floors</span>
+              </div>
+              <span class="material-icons-round chevron">expand_more</span>
+            </button>
+            <div class="accordion-body">
+              <div class="floor-list-title">Select Floor</div>
+              <ul class="floor-list" data-building="Bhawar">
+                <li class="floor-item" data-floor="G">
+                  <span class="material-icons-round floor-icon bhawar-floor-icon">layers</span>
+                  Ground Floor
+                </li>
+                <li class="floor-item" data-floor="1">
+                  <span class="material-icons-round floor-icon bhawar-floor-icon">layers</span>
+                  Floor 1
+                </li>
+                <li class="floor-item" data-floor="2">
+                  <span class="material-icons-round floor-icon bhawar-floor-icon">layers</span>
+                  Floor 2
+                </li>
+                <li class="floor-item" data-floor="3">
+                  <span class="material-icons-round floor-icon bhawar-floor-icon">layers</span>
+                  Floor 3
+                </li>
+                <li class="floor-item" data-floor="4">
+                  <span class="material-icons-round floor-icon bhawar-floor-icon">layers</span>
+                  Floor 4
+                </li>
+                <li class="floor-item" data-floor="5">
+                  <span class="material-icons-round floor-icon bhawar-floor-icon">layers</span>
+                  Floor 5
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Sidebar Ad Placeholder -->
+      <div class="ad-placeholder sidebar-ad">
+        <span>Google Ad Space<br>(300x250)</span>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <!-- Topbar -->
+      <header class="topbar">
+        <button id="mobile-menu-btn" class="icon-button mobile-only">
+          <span class="material-icons-round">menu</span>
+        </button>
+        <!-- Mobile Brand (logo + name, shown only on mobile) -->
+        <div class="mobile-brand">
+          <img src="CampusGoLogo.png" alt="Campus Go" class="brand-logo-img">
+        </div>
+        <div class="search-container" style="position: relative;">
+          <span class="material-icons-round search-icon">search</span>
+          <input type="text" id="search-input" placeholder="Search for a room, lab, facility..." class="search-input"
+            autocomplete="off">
+          <div class="search-shortcut">⌘ K</div>
+          <div id="search-results" class="search-results hidden"></div>
+        </div>
+        <div class="topbar-actions">
+          <button id="theme-toggle" class="icon-button theme-toggle-btn" title="Toggle Dark/Light Mode">
+            <span class="material-icons-round">dark_mode</span>
+          </button>
+          <div class="partner-logo">
+            <img src="CopyKatlogo.jpeg" alt="CopyKat Logo" style="height: 40px; width: auto; border-radius: 8px;">
+          </div>
+        </div>
+      </header>
+
+      <div class="content-wrapper">
+        <!-- Main Dashboard Area -->
+        <main class="main-content">
+          <!-- Banner Ad Placeholder -->
+          <div class="ad-placeholder banner-ad">
+            <span>Google Ad Banner Space (728x90)</span>
+          </div>
+
+          <div class="views-container">
+            <!-- View 1: Floor Map Layout -->
+            <section id="view-map" class="view-section active">
+              <div class="view-header">
+                <div class="header-title-row">
+                  <div class="header-icon-wrap">
+                    <span class="material-icons-round">domain</span>
+                  </div>
+                  <div class="header-text">
+                    <h2 id="map-title">Main Building – Floor 1</h2>
+                    <p class="subtitle">Explore rooms and facilities on this floor</p>
+                  </div>
+                </div>
+                <div class="header-buttons">
+                  <button id="legend-btn" class="btn btn-outline btn-sm">
+                    <span class="material-icons-round">tune</span> Legend
+                  </button>
+                  <button id="view-3d-btn" class="btn btn-primary btn-sm">
+                    <span class="material-icons-round">3d_rotation</span> <span class="btn-text">View 3D</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="map-container">
+                <!-- Zoom Controls -->
+                <div class="map-controls">
+                  <button id="zoom-in" class="control-btn"><span class="material-icons-round">add</span></button>
+                  <button id="zoom-out" class="control-btn"><span class="material-icons-round">remove</span></button>
+                  <button id="reset-zoom" class="control-btn"><span
+                      class="material-icons-round">my_location</span></button>
+                </div>
+
+                <!-- Bhawar Building Map (L shape from image) -->
+                <div class="floor-map bhawar-map hidden" id="bhawar-map">
+                  <div class="hallway bhawar-hallway"></div>
+                  <div class="hallway bhawar-hallway-v"></div>
+
+                  <!-- Row 1 -->
+                  <div class="room" id="b-023" data-room-name="B-023">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple">
+                      <span class="room-label">B-023</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-024" data-room-name="B-024">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-024</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-washroom-1" data-room-name="Washroom">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-025" data-room-name="B-025">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label">B-025</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-026" data-room-name="B-026">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow">
+                      <span class="room-label">B-026</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-027" data-room-name="B-027">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-pink">
+                      <span class="room-label">B-027</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-028" data-room-name="B-028">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple">
+                      <span class="room-label">B-028</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="room" id="b-lh8" data-room-name="LH-8">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">LH-8</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-lh7" data-room-name="LH-7">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label">LH-7</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-stairs-lh" data-room-name="Stairs">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b-lh6" data-room-name="LH-6">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-yellow">
+                      <span class="room-label">LH-6</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-lh5" data-room-name="LH-5">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink">
+                      <span class="room-label">LH-5</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-lift" data-room-name="Lift">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:12px;">Lift</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-001" data-room-name="B-001">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-001</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="room" id="b-stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-002" data-room-name="B-002">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-pink">
+                      <span class="room-label">B-002</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 5 -->
+                  <div class="room" id="b-lh4" data-room-name="LH-4">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label">LH-4</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b-003" data-room-name="B-003">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label">B-003</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 6 -->
+                  <div class="room" id="b-004" data-room-name="B-004">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-yellow">
+                      <span class="room-label">B-004</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 7 -->
+                  <div class="room" id="b-lh3" data-room-name="LH-3">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-purple">
+                      <span class="room-label">LH-3</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 8 -->
+                  <div class="room" id="b-washroom-2" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bhawar Building Map (Floor 1) -->
+                <div class="floor-map bhawar-map-1 hidden" id="bhawar-map-1">
+                  <div class="hallway bhawar-hallway-1-h"></div>
+                  <div class="hallway bhawar-hallway-1-v"></div>
+
+                  <!-- Row 1 -->
+                  <div class="room" id="b1-123" data-room-name="B-123">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">B-123</span></div>
+                  </div>
+                  <div class="room" id="b1-124" data-room-name="B-124">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-124</span></div>
+                  </div>
+                  <div class="room" id="b1-washroom-1" data-room-name="Washroom">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+
+                  <div class="room" id="b1-125" data-room-name="B-125">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">B-125</span></div>
+                  </div>
+                  <div class="room" id="b1-126" data-room-name="B-126">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-pink"><span class="room-label">B-126</span></div>
+                  </div>
+                  <div class="room" id="b1-127" data-room-name="B-127">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">B-127</span></div>
+                  </div>
+                  <div class="room" id="b1-128" data-room-name="B-128 Computer Lab">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-128</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="room" id="b1-lh16" data-room-name="LH-16">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-green"><span class="room-label">LH-16</span></div>
+                  </div>
+                  <div class="room" id="b1-lh15" data-room-name="LH-15">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH-15</span></div>
+                  </div>
+                  <div class="room" id="b1-stairs-lh" data-room-name="Stairs">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b1-lh14" data-room-name="LH-14">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink"><span class="room-label">LH-14</span></div>
+                  </div>
+                  <div class="room" id="b1-lh13" data-room-name="LH-13">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-13</span></div>
+                  </div>
+                  <div class="room" id="b1-stairs-top" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b1-lift" data-room-name="Lift">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:12px;">Lift</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b1-101" data-room-name="B-101">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-101</span></div>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="room" id="b1-stairs-bot" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b1-102" data-room-name="B-102">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-102</span></div>
+                  </div>
+
+                  <!-- Row 5 -->
+                  <div class="room" id="b1-lh12" data-room-name="LH-12">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH-12</span></div>
+                  </div>
+                  <div class="room" id="b1-103" data-room-name="B-103">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-pink"><span class="room-label">B-103</span></div>
+                  </div>
+
+                  <!-- Row 6 -->
+                  <div class="room" id="b1-lh11" data-room-name="LH-11">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-11</span></div>
+                  </div>
+                  <div class="room" id="b1-104" data-room-name="B-104 Computer Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-104</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 7 -->
+                  <div class="room" id="b1-washroom-2" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bhawar Building Map (Floor 2) -->
+                <div class="floor-map bhawar-map-2 hidden" id="bhawar-map-2">
+                  <div class="hallway bhawar-hallway-2-h"></div>
+                  <div class="hallway bhawar-hallway-2-v"></div>
+
+                  <!-- Row 1 -->
+                  <div class="room" id="b2-225" data-room-name="B-225">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">B-225</span></div>
+                  </div>
+                  <div class="room" id="b2-226" data-room-name="B-226 Computer Lab">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-226</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b2-227" data-room-name="B-227 Computer Lab">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label">B-227</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b2-228" data-room-name="B-228">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">B-228</span></div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="room" id="b2-lh22" data-room-name="LH-22">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink"><span class="room-label">LH-22</span></div>
+                  </div>
+                  <div class="room" id="b2-lh21" data-room-name="LH-21">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-21</span></div>
+                  </div>
+                  <div class="room" id="b2-stairs-top" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b2-lift" data-room-name="Lift">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:12px;">Lift</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b2-201" data-room-name="B-201">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-201</span></div>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="room" id="b2-stairs-bot" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b2-202" data-room-name="B-202">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-202</span></div>
+                  </div>
+
+                  <!-- Row 5 -->
+                  <div class="room" id="b2-lh20" data-room-name="LH-20">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH-20</span></div>
+                  </div>
+                  <div class="room" id="b2-203" data-room-name="B-203 Chemistry Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-pink">
+                      <span class="room-label">B-203</span>
+                      <span class="room-type">Chemistry Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 6 -->
+                  <div class="room" id="b2-lh19" data-room-name="LH-19">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-19</span></div>
+                  </div>
+                  <div class="room" id="b2-204" data-room-name="B-204 Chemistry Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-204</span>
+                      <span class="room-type">Chemistry Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 7 -->
+                  <div class="room" id="b2-washroom" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bhawar Building Map (Floor 3) -->
+                <div class="floor-map bhawar-map-3 hidden" id="bhawar-map-3">
+                  <div class="hallway bhawar-hallway-3-h"></div>
+                  <div class="hallway bhawar-hallway-3-v"></div>
+
+                  <!-- Row 1 -->
+                  <div class="room" id="b3-325" data-room-name="B-325">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">B-325</span></div>
+                  </div>
+                  <div class="room" id="b3-326" data-room-name="B-326">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-326</span></div>
+                  </div>
+                  <div class="room" id="b3-327" data-room-name="B-327">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-327</span></div>
+                  </div>
+                  <div class="room" id="b3-328" data-room-name="B-328">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">B-328</span></div>
+                  </div>
+                  <div class="room" id="b3-faculty" data-room-name="Faculty Area">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-pink"><span class="room-label">Faculty Area</span></div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="room" id="b3-lh30" data-room-name="LH-30">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink"><span class="room-label">LH-30</span></div>
+                  </div>
+                  <div class="room" id="b3-lh29" data-room-name="LH-29">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-29</span></div>
+                  </div>
+                  <div class="room" id="b3-stairs-top" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b3-lift" data-room-name="Lift">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:12px;">Lift</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b3-301" data-room-name="B-301">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-301</span></div>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="room" id="b3-stairs-bot" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b3-302" data-room-name="B-302">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-302</span></div>
+                  </div>
+
+                  <!-- Row 5 -->
+                  <div class="room" id="b3-lh28" data-room-name="LH-28">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH-28</span></div>
+                  </div>
+                  <div class="room" id="b3-303" data-room-name="B-303">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-pink"><span class="room-label">B-303</span></div>
+                  </div>
+
+                  <!-- Row 6 -->
+                  <div class="room" id="b3-lh27" data-room-name="LH-27">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-27</span></div>
+                  </div>
+                  <div class="room" id="b3-304" data-room-name="B-304 Physics Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">B-304</span>
+                      <span class="room-type">Physics Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 7 -->
+                  <div class="room" id="b3-washroom" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bhawar Building Map (Floor 4) -->
+                <div class="floor-map bhawar-map-4 hidden" id="bhawar-map-4">
+                  <div class="hallway bhawar-hallway-4-h"></div>
+                  <div class="hallway bhawar-hallway-4-v"></div>
+
+                  <!-- Row 1 -->
+                  <div class="room" id="b4-425" data-room-name="B-425">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">B-425</span></div>
+                  </div>
+                  <div class="room" id="b4-426" data-room-name="B-426">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-426</span></div>
+                  </div>
+                  <div class="room" id="b4-427" data-room-name="B-427">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-427</span></div>
+                  </div>
+                  <div class="room" id="b4-428" data-room-name="B-428">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">B-428</span></div>
+                  </div>
+                  <div class="room" id="b4-faculty" data-room-name="Faculty Area">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-pink"><span class="room-label">Faculty Area</span></div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="room" id="b4-lh38" data-room-name="LH-38">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink"><span class="room-label">LH-38</span></div>
+                  </div>
+                  <div class="room" id="b4-lh37" data-room-name="LH-37">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-37</span></div>
+                  </div>
+                  <div class="room" id="b4-stairs-top" data-room-name="Stair">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b4-lift" data-room-name="Lift">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:12px;">Lift</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b4-lab3" data-room-name="Lab-3 Computer Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">Lab-3</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b4-lab4" data-room-name="Lab-4 Computer Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label">Lab-4</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="room" id="b4-stairs-bot" data-room-name="Stair">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b4-402" data-room-name="B-402 / Lab-2 Computer Lab">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-purple">
+                      <span class="room-label">B-402 / Lab-2</span>
+                      <span class="room-type">Computer Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Row 5 -->
+                  <div class="room" id="b4-lh36" data-room-name="LH-36">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH-36</span></div>
+                  </div>
+                  <div class="room" id="b4-403" data-room-name="B-403">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-pink"><span class="room-label">B-403</span></div>
+                  </div>
+
+                  <!-- Row 6 -->
+                  <div class="room" id="b4-lh35" data-room-name="LH-35">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-35</span></div>
+                  </div>
+                  <div class="room" id="b4-404" data-room-name="B-404">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-404</span></div>
+                  </div>
+
+                  <!-- Row 7 -->
+                  <div class="room" id="b4-washroom" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bhawar Building Map (Floor 5) -->
+                <div class="floor-map bhawar-map-5 hidden" id="bhawar-map-5">
+                  <div class="hallway bhawar-hallway-5-h"></div>
+                  <div class="hallway bhawar-hallway-5-v"></div>
+
+                  <!-- Row 1 -->
+                  <div class="room" id="b5-525" data-room-name="B-525">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">B-525</span></div>
+                  </div>
+                  <div class="room" id="b5-526" data-room-name="B-526">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-526</span></div>
+                  </div>
+                  <div class="room" id="b5-527" data-room-name="B-527">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-527</span></div>
+                  </div>
+                  <div class="room" id="b5-528" data-room-name="B-528">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">B-528</span></div>
+                  </div>
+                  <div class="room" id="b5-faculty" data-room-name="Faculty Area">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-pink"><span class="room-label">Faculty Area</span></div>
+                  </div>
+
+                  <!-- Row 3 -->
+                  <div class="room" id="b5-lh46" data-room-name="LH-46">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink"><span class="room-label">LH-46</span></div>
+                  </div>
+                  <div class="room" id="b5-lh45" data-room-name="LH-45">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-45</span></div>
+                  </div>
+                  <div class="room" id="b5-stairs-top" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b5-lift" data-room-name="Lift">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:12px;">Lift</span>
+                    </div>
+                  </div>
+                  <div class="room" id="b5-501" data-room-name="B-501">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-501</span></div>
+                  </div>
+
+                  <!-- Row 4 -->
+                  <div class="room" id="b5-stairs-bot" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral"><span class="material-icons-round">stairs</span></div>
+                  </div>
+                  <div class="room" id="b5-502" data-room-name="B-502">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green"><span class="room-label">B-502</span></div>
+                  </div>
+
+                  <!-- Row 5 -->
+                  <div class="room" id="b5-lh44" data-room-name="LH-44">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH-44</span></div>
+                  </div>
+                  <div class="room" id="b5-503" data-room-name="B-503">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-pink"><span class="room-label">B-503</span></div>
+                  </div>
+
+                  <!-- Row 6 -->
+                  <div class="room" id="b5-lh43" data-room-name="LH-43">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH-43</span></div>
+                  </div>
+                  <div class="room" id="b5-504" data-room-name="B-504">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue"><span class="room-label">B-504</span></div>
+                  </div>
+
+                  <!-- Row 7 -->
+                  <div class="room" id="b5-washroom" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Building Basement Map -->
+                <div class="floor-map main-map-basement hidden" id="main-map-basement">
+                  <!-- Hallway segments -->
+                  <div class="hallway main-basement-hallway-h"></div>
+                  <div class="hallway main-basement-hallway-v"></div>
+
+                  <!-- Top: Auditorium -->
+                  <div class="room" id="m-b-auditorium" data-room-name="Auditorium">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple">
+                      <span class="room-label">Auditorium</span>
+                    </div>
+                  </div>
+
+                  <!-- Left side: Washroom + Stair -->
+                  <div class="room" id="m-b-washroom-l" data-room-name="Washroom">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                  <div class="room" id="m-b-stair-l" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+
+                  <!-- Right side: Washroom + LH + Stair -->
+                  <div class="room" id="m-b-washroom-r" data-room-name="Washroom">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+                  <div class="room" id="m-b-lh" data-room-name="LH">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label">LH</span>
+                    </div>
+                  </div>
+                  <div class="room" id="m-b-stair-r" data-room-name="Stairs">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Building Ground Floor Map -->
+                <div class="floor-map main-map-ground hidden" id="main-map-ground">
+                  <!-- Hallway -->
+                  <div class="hallway main-ground-hallway-h"></div>
+                  <div class="hallway main-ground-hallway-v"></div>
+
+                  <!-- LH Wing (top-left 4 LH rooms) -->
+                  <div class="room" id="m-g-lh1" data-room-name="LH-1">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-g-lh2" data-room-name="LH-2">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-g-lh3" data-room-name="LH-3">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-green"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-g-lh4" data-room-name="LH-4">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH</span></div>
+                  </div>
+
+                  <!-- Left side: Washroom -->
+                  <div class="room" id="m-g-washroom" data-room-name="Washroom">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+
+                  <!-- Left side Stair -->
+                  <div class="room" id="m-g-stair-l" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+
+                  <!-- Lift -->
+                  <div class="room" id="m-g-lift" data-room-name="Lift">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:11px;">Lift</span>
+                    </div>
+                  </div>
+
+                  <!-- Cyber Security Lab -->
+                  <div class="room" id="m-g-cyber-lab" data-room-name="Cyber Security Lab">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-pink">
+                      <span class="room-label" style="font-size:11px;">Cyber Security Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Computer Lab -->
+                  <div class="room" id="m-g-computer-lab" data-room-name="Computer Lab">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label" style="font-size:11px;">Computer Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Student Section -->
+                  <div class="room" id="m-g-student-section" data-room-name="Student Section">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-yellow">
+                      <span class="room-label" style="font-size:12px;">Student Section</span>
+                    </div>
+                  </div>
+
+                  <!-- Right Stair -->
+                  <div class="room" id="m-g-stair-r" data-room-name="Stairs">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Building Floor 1 Map -->
+                <div class="floor-map main-map" id="main-map">
+                  <div class="hallway main-hallway"></div>
+                  <div class="hallway main-hallway-arm"></div>
+                  <div class="hallway main-hallway-bot"></div>
+
+                  <!-- LH wing (top-left, 4 LH rooms in 2x2) -->
+                  <div class="room" id="m-f1-lh1" data-room-name="LH-1">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-f1-lh2" data-room-name="LH-2">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-f1-lh3" data-room-name="LH-3">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-green"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-f1-lh4" data-room-name="LH-4">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH</span></div>
+                  </div>
+
+                  <!-- Stair (top center) -->
+                  <div class="room" id="m-f1-stair-top" data-room-name="Stairs">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+
+                  <!-- Washroom -->
+                  <div class="room" id="m-f1-washroom" data-room-name="Washroom">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+
+                  <!-- Lift -->
+                  <div class="room" id="m-f1-lift" data-room-name="Lift">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:11px;">Lift</span>
+                    </div>
+                  </div>
+
+                  <!-- Bottom-left Stair -->
+                  <div class="room" id="m-f1-stair-bot" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Main Building Floor 2 Map -->
+                <div class="floor-map main-map-f2 hidden" id="main-map-f2">
+                  <div class="hallway main-f2-hallway-h"></div>
+                  <div class="hallway main-f2-hallway-v"></div>
+                  <div class="hallway main-f2-hallway-bot"></div>
+
+                  <!-- LH Wing (4 LH rooms top-left, 2x2) -->
+                  <div class="room" id="m-f2-lh1" data-room-name="LH-1">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-purple"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-f2-lh2" data-room-name="LH-2">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-blue"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-f2-lh3" data-room-name="LH-3">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-green"><span class="room-label">LH</span></div>
+                  </div>
+                  <div class="room" id="m-f2-lh4" data-room-name="LH-4">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-yellow"><span class="room-label">LH</span></div>
+                  </div>
+
+                  <!-- Stair top -->
+                  <div class="room" id="m-f2-stair-top" data-room-name="Stairs">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+
+                  <!-- Washroom -->
+                  <div class="room" id="m-f2-washroom" data-room-name="Washroom">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-restroom">
+                      <span class="material-icons-round icon-blue">man</span>
+                      <span class="material-icons-round icon-red">woman</span>
+                    </div>
+                  </div>
+
+                  <!-- Stair bottom -->
+                  <div class="room" id="m-f2-stair-bot" data-room-name="Stairs">
+                    <div class="door-x door-r"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">stairs</span>
+                    </div>
+                  </div>
+
+                  <!-- Lift -->
+                  <div class="room" id="m-f2-lift" data-room-name="Lift">
+                    <div class="door-x door-b"></div>
+                    <div class="room-inner room-neutral">
+                      <span class="material-icons-round">elevator</span>
+                      <span class="room-label" style="font-size:11px;">Lift</span>
+                    </div>
+                  </div>
+
+                  <!-- Computer Lab -->
+                  <div class="room" id="m-f2-computer-lab" data-room-name="Computer Lab">
+                    <div class="door-x door-t"></div>
+                    <div class="room-inner room-blue">
+                      <span class="room-label" style="font-size:11px;">Computer Lab</span>
+                    </div>
+                  </div>
+
+                  <!-- Library -->
+                  <div class="room" id="m-f2-library" data-room-name="Library">
+                    <div class="door-x door-l"></div>
+                    <div class="room-inner room-green">
+                      <span class="room-label" style="font-size:13px;">Library</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="legend-badge">
+                  <span class="material-icons-round">location_on</span> You are here
+                </div>
+              </div>
+
+              <div class="tip-bar">
+                <span class="material-icons-round">auto_awesome</span>
+                Tip: Click on any room to view details, facilities and availability.
+              </div>
+            </section>
+
+            <!-- View 2: Report an Issue Flow (Hidden by default) -->
+            <section id="view-report" class="view-section">
+              <div class="report-page-header">
+                <div class="report-title-area">
+                  <button id="btn-back" class="icon-button back-btn" style="margin-right: 16px;">
+                    <span class="material-icons-round">arrow_back</span>
+                  </button>
+                  <div>
+                    <h2>Report / Update Room</h2>
+                    <p class="subtitle">Help others by updating the status or reporting an issue.</p>
+                  </div>
+                </div>
+                <button id="btn-change-room" class="btn btn-outline"
+                  onclick="document.getElementById('btn-back').click()">
+                  <span class="material-icons-round">edit_square</span> Change Room
+                </button>
+              </div>
+
+              <div class="room-breadcrumbs">
+                <div class="breadcrumb-pill">
+                  <div class="pill-icon bg-purple-light"><span class="material-icons-round text-purple">business</span>
+                  </div>
+                  <div class="pill-text">
+                    <div class="pill-title" id="bc-building">Main Building</div>
+                    <div class="pill-subtitle" id="bc-floor">Floor 2</div>
+                  </div>
+                </div>
+                <span class="material-icons-round breadcrumb-arrow">chevron_right</span>
+                <div class="breadcrumb-pill">
+                  <div class="pill-icon bg-blue-light"><span class="material-icons-round text-blue"
+                      id="bc-icon">desktop_windows</span></div>
+                  <div class="pill-text">
+                    <div class="pill-title" id="bc-room">Room 203</div>
+                    <div class="pill-subtitle" id="bc-room-type">Computer Lab</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mobile-only Change Room Button (shown below breadcrumbs) -->
+              <button class="btn btn-outline mobile-change-room-btn" style="display:none;"
+                onclick="document.getElementById('btn-back').click()">
+                <span class="material-icons-round">edit_square</span> Change Room
+              </button>
+
+              <div id="issue-form-container" class="issue-form-container">
+                <div class="issue-section">
+                  <h3>1. Update Room Status</h3>
+                  <div class="status-cards-container">
+                    <label class="status-card occupied-card">
+                      <input type="radio" name="room-status" value="occupied" id="radio-occupied" checked>
+                      <div class="status-card-content">
+                        <span class="material-icons-round status-icon text-pink">schedule</span>
+                        <div class="status-text">
+                          <div class="status-title">Occupied</div>
+                          <div class="status-desc">Class is going on</div>
+                        </div>
+                        <div class="radio-circle"></div>
+                      </div>
+                    </label>
+                    <label class="status-card vacant-card">
+                      <input type="radio" name="room-status" value="vacant" id="radio-vacant">
+                      <div class="status-card-content">
+                        <span class="material-icons-round status-icon text-green">check_circle</span>
+                        <div class="status-text">
+                          <div class="status-title">Vacant</div>
+                          <div class="status-desc">Room is empty and available</div>
+                        </div>
+                        <div class="radio-circle"></div>
+                      </div>
+                    </label>
+                    <label class="status-card issue-card-status">
+                      <input type="radio" name="room-status" value="issue" id="radio-issue">
+                      <div class="status-card-content">
+                        <span class="material-icons-round status-icon text-yellow">warning_amber</span>
+                        <div class="status-text">
+                          <div class="status-title">Issue / Not Working</div>
+                          <div class="status-desc">There is an issue in the room</div>
+                        </div>
+                        <div class="radio-circle"></div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="issue-section" id="section-select-issue">
+                  <h3>2. Select Issue <span class="subtitle-inline">(Select all that apply)</span></h3>
+                  <div class="issue-grid horizontal-grid">
+                    <div class="issue-card" data-issue="Computer">
+                      <div class="issue-card-left">
+                        <div class="issue-icon-wrap bg-purple-light"><span
+                            class="material-icons-round text-purple">desktop_windows</span></div>
+                        <span class="issue-name">Computer not working</span>
+                      </div>
+                      <div class="checkbox-square"></div>
+                    </div>
+                    <div class="issue-card" data-issue="Projector">
+                      <div class="issue-card-left">
+                        <div class="issue-icon-wrap bg-purple-light"><span
+                            class="material-icons-round text-purple">videocam</span></div>
+                        <span class="issue-name">Projector not working</span>
+                      </div>
+                      <div class="checkbox-square"></div>
+                    </div>
+                    <div class="issue-card" data-issue="Login Error">
+                      <div class="issue-card-left">
+                        <div class="issue-icon-wrap bg-purple-light"><span
+                            class="material-icons-round text-purple">vpn_key</span></div>
+                        <span class="issue-name">Computer login error</span>
+                      </div>
+                      <div class="checkbox-square"></div>
+                    </div>
+                    <div class="issue-card" data-issue="AC">
+                      <div class="issue-card-left">
+                        <div class="issue-icon-wrap bg-purple-light"><span
+                            class="material-icons-round text-purple">ac_unit</span></div>
+                        <span class="issue-name">AC not working</span>
+                      </div>
+                      <div class="checkbox-square"></div>
+                    </div>
+                    <div class="issue-card" data-issue="Fan">
+                      <div class="issue-card-left">
+                        <div class="issue-icon-wrap bg-purple-light"><span
+                            class="material-icons-round text-purple">mode_fan</span></div>
+                        <span class="issue-name">Fan issue</span>
+                      </div>
+                      <div class="checkbox-square"></div>
+                    </div>
+                    <div class="issue-card" data-issue="Custom">
+                      <div class="issue-card-left">
+                        <div class="issue-icon-wrap bg-purple-light"><span
+                            class="material-icons-round text-purple">more_horiz</span></div>
+                        <span class="issue-name">Other (Custom issue)</span>
+                      </div>
+                      <div class="checkbox-square"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="issue-section">
+                  <h3>3. Additional Details <span class="subtitle-inline">(Optional)</span></h3>
+                  <div class="textarea-wrapper">
+                    <textarea id="issue-details" placeholder="Add any additional details..." maxlength="300"></textarea>
+                    <div class="char-counter"><span id="char-count">0</span>/300</div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button id="btn-cancel" class="btn btn-outline">Cancel</button>
+                  <button id="btn-submit" class="btn btn-primary">
+                    <span class="material-icons-round">send</span> Submit Report
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Sticky Submit Bar (mobile only) -->
+            <div class="sticky-submit-bar">
+              <button id="btn-submit-mobile" class="btn btn-primary">
+                <span class="material-icons-round">send</span> Submit Report
+              </button>
+            </div>
+
+            <!-- View 3: Faculty Area -->
+            <section id="view-faculty" class="view-section">
+              <div class="report-page-header">
+                <div class="report-title-area">
+                  <button id="btn-back-faculty" class="icon-button back-btn" style="margin-right: 16px;">
+                    <span class="material-icons-round">arrow_back</span>
+                  </button>
+                  <div>
+                    <h2>Faculties's office</h2>
+                    <p class="subtitle">Directory of faculty members in this area</p>
+                  </div>
+                </div>
+              </div>
+              <div class="faculty-list"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: 24px;">
+                <div class="faculty-card"
+                  style="padding: 20px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-color); display: flex; align-items: center; gap: 16px;">
+                  <div
+                    style="width: 48px; height: 48px; background: var(--brand-purple-light); color: var(--brand-purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">
+                  </div>
+                  <div style="flex: 1;">
+                    <div
+                      style="height: 16px; background-color: var(--color-neutral); border-radius: 4px; margin-bottom: 8px; width: 70%;">
+                    </div>
+                    <div style="height: 12px; background-color: var(--color-neutral); border-radius: 4px; width: 50%;">
+                    </div>
+                  </div>
+                </div>
+                <div class="faculty-card"
+                  style="padding: 20px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-color); display: flex; align-items: center; gap: 16px;">
+                  <div
+                    style="width: 48px; height: 48px; background: var(--bg-blue-light); color: var(--text-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">
+                  </div>
+                  <div style="flex: 1;">
+                    <div
+                      style="height: 16px; background-color: var(--color-neutral); border-radius: 4px; margin-bottom: 8px; width: 80%;">
+                    </div>
+                    <div style="height: 12px; background-color: var(--color-neutral); border-radius: 4px; width: 60%;">
+                    </div>
+                  </div>
+                </div>
+                <div class="faculty-card"
+                  style="padding: 20px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-color); display: flex; align-items: center; gap: 16px;">
+                  <div
+                    style="width: 48px; height: 48px; background: var(--bg-green-light); color: var(--text-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">
+                  </div>
+                  <div style="flex: 1;">
+                    <div
+                      style="height: 16px; background-color: var(--color-neutral); border-radius: 4px; margin-bottom: 8px; width: 60%;">
+                    </div>
+                    <div style="height: 12px; background-color: var(--color-neutral); border-radius: 4px; width: 40%;">
+                    </div>
+                  </div>
+                </div>
+                <div class="faculty-card"
+                  style="padding: 20px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--surface-color); display: flex; align-items: center; gap: 16px;">
+                  <div
+                    style="width: 48px; height: 48px; background: var(--bg-pink-light); color: var(--text-pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold;">
+                  </div>
+                  <div style="flex: 1;">
+                    <div
+                      style="height: 16px; background-color: var(--color-neutral); border-radius: 4px; margin-bottom: 8px; width: 75%;">
+                    </div>
+                    <div style="height: 12px; background-color: var(--color-neutral); border-radius: 4px; width: 55%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+
+        <!-- Right Side Panel: Rooms on this floor -->
+        <aside class="right-panel">
+          <h3 class="panel-title">Rooms on this floor</h3>
+          <div class="room-list">
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-purple-light">
+                <span class="material-icons-round text-purple">chair</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">101</div>
+                <div class="room-desc">Classroom</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-blue-light">
+                <span class="material-icons-round text-blue">desktop_windows</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">102</div>
+                <div class="room-desc">Computer Lab</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-green-light">
+                <span class="material-icons-round text-green">science</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">103</div>
+                <div class="room-desc">Physics Lab</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-purple-light">
+                <span class="material-icons-round text-purple">chair</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">104</div>
+                <div class="room-desc">Classroom</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-yellow-light">
+                <span class="material-icons-round text-yellow">biotech</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">105</div>
+                <div class="room-desc">Chemistry Lab</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-blue-light">
+                <span class="material-icons-round text-blue">desktop_windows</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">106</div>
+                <div class="room-desc">Classroom</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-pink-light">
+                <span class="material-icons-round text-pink">groups</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">107</div>
+                <div class="room-desc">Seminar Room</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+            <div class="room-list-item">
+              <div class="room-icon-box bg-green-light">
+                <span class="material-icons-round text-green">person</span>
+              </div>
+              <div class="room-info">
+                <div class="room-number">108</div>
+                <div class="room-desc">Faculty Room</div>
+              </div>
+              <span class="material-icons-round chevron-right">chevron_right</span>
+            </div>
+
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <span class="material-icons-round">check_circle</span>
+      <span class="toast-message">Report submitted successfully!</span>
+    </div>
+  </div>
+
+  <!-- Legend Modal -->
+  <div class="modal-overlay" id="legend-modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <h3>Map Legend</h3>
+        <button class="icon-button close-legend">
+          <span class="material-icons-round">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="legend-list">
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #E8F0FE; border: 2px solid #D2E3FC;"></div>
+            <span>Standard Classrooms (Blue)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #E6F4EA; border: 2px solid #CEEAD6;"></div>
+            <span>Standard Classrooms (Green)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #FCE8E6; border: 2px solid #FAD2CF;"></div>
+            <span>Lecture Halls & Faculty (Red/Pink)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #F3E8FD; border: 2px solid #E9D2FD;"></div>
+            <span>Laboratories (Purple)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #FEF7E0; border: 2px solid #FEEFC3;"></div>
+            <span>Other Rooms (Yellow)</span>
+          </div>
+          <div class="legend-item">
+            <span class="material-icons-round"
+              style="color: #5F6368; font-size: 20px; width: 24px; text-align: center;">stairs</span>
+            <span>Staircase</span>
+          </div>
+          <div class="legend-item">
+            <span class="material-icons-round"
+              style="color: #5F6368; font-size: 20px; width: 24px; text-align: center;">elevator</span>
+            <span>Elevator / Lift</span>
+          </div>
+          <div class="legend-item">
+            <span class="material-icons-round icon-blue"
+              style="font-size: 20px; width: 12px; text-align: center;">man</span>
+            <span class="material-icons-round icon-red"
+              style="font-size: 20px; width: 12px; text-align: center;">woman</span>
+            <span style="margin-left: 8px;">Restrooms</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color"
+              style="border: 3px solid var(--brand-purple); animation: pulse-highlight 1.5s infinite;"></div>
+            <span>Search Highlight</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="floor.js"></script>
+</body>
+
+</html>
